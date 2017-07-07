@@ -1,58 +1,57 @@
 package com.packtpub.java9.concurrency.cookbook.appendix.recipe03.core;
 
-import java.util.Date;
-
 import com.packtpub.java9.concurrency.cookbook.appendix.recipe03.task.TaskAtomic;
 import com.packtpub.java9.concurrency.cookbook.appendix.recipe03.task.TaskLock;
+import java.util.Date;
 
 public class Main {
 
-	/**
-	 * @param args
-	 */
-	public static void main(String[] args) {
-		
-		TaskAtomic atomicTask=new TaskAtomic();
+  /**
+   * @param args
+   */
+  public static void main(String[] args) {
 
-		TaskLock lockTask=new TaskLock();
-		
-		int numberThreads=50;
-		Thread threads[]=new Thread[numberThreads];
-		Date begin,end;
-		
-		begin=new Date();
-		for (int i=0; i<numberThreads; i++) {
-			threads[i]=new Thread(lockTask);
-			threads[i].start();
-		}
+    TaskAtomic atomicTask = new TaskAtomic();
 
-		for (int i=0; i<numberThreads; i++) {
-			try {
-				threads[i].join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		end=new Date();
-		
-		System.out.printf("Main: Lock results: %d\n",(end.getTime()-begin.getTime()));
+    TaskLock lockTask = new TaskLock();
 
-		begin=new Date();
-		for (int i=0; i<numberThreads; i++) {
-			threads[i]=new Thread(atomicTask);
-			threads[i].start();
-		}
+    int numberThreads = 50;
+    Thread threads[] = new Thread[numberThreads];
+    Date begin, end;
 
-		for (int i=0; i<numberThreads; i++) {
-			try {
-				threads[i].join();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
-		}
-		end=new Date();
-		
-		System.out.printf("Main: Atomic results: %d\n",(end.getTime()-begin.getTime()));	
-	}
+    begin = new Date();
+    for (int i = 0; i < numberThreads; i++) {
+      threads[i] = new Thread(lockTask);
+      threads[i].start();
+    }
+
+    for (int i = 0; i < numberThreads; i++) {
+      try {
+        threads[i].join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    end = new Date();
+
+    System.out.printf("Main: Lock results: %d\n", (end.getTime() - begin.getTime()));
+
+    begin = new Date();
+    for (int i = 0; i < numberThreads; i++) {
+      threads[i] = new Thread(atomicTask);
+      threads[i].start();
+    }
+
+    for (int i = 0; i < numberThreads; i++) {
+      try {
+        threads[i].join();
+      } catch (InterruptedException e) {
+        e.printStackTrace();
+      }
+    }
+    end = new Date();
+
+    System.out.printf("Main: Atomic results: %d\n", (end.getTime() - begin.getTime()));
+  }
 
 }

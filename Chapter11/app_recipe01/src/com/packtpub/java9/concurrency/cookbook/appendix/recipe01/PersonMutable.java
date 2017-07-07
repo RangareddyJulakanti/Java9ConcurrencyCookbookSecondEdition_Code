@@ -3,6 +3,7 @@ package com.packtpub.java9.concurrency.cookbook.appendix.recipe01;
 import java.util.Date;
 
 public class PersonMutable {
+
 	private String firstName;
 	private String lastName;
 	private Date birthDate;
